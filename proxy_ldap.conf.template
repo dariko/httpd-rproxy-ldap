@@ -1,0 +1,50 @@
+Listen ${LISTEN_PORT}
+
+LoadModule ssl_module         modules/mod_ssl.so
+
+LoadModule authnz_ldap_module modules/mod_authnz_ldap.so
+LoadModule ldap_module        modules/mod_ldap.so
+
+LoadModule proxy_module       modules/mod_proxy.so
+LoadModule proxy_http_module  modules/mod_proxy_http.so
+
+LDAPTrustedGlobalCert CA_BASE64 "/ldap_cacert.pem"
+
+#LogLevel debug
+<VirtualHost *:${LISTEN_PORT}>
+    ServerName ${SERVERNAME}
+    SSLEngine on
+    
+    SSLCertificateFile "/usr/local/apache2/conf/proxy_ldap.cert.pem"
+    SSLCertificateKeyFile "/usr/local/apache2/conf/proxy_ldap.key.pem"
+    
+    SSLCompression off
+    SSLProtocol All -SSLv2 -SSLv3
+    SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
+    
+    
+    <Location />
+      AuthName "${BASIC_AUTH_STRING}"
+      
+      # enable InitialBindAsUser and set InitialBindPattern if pattern given
+      $([[ -v LDAP_BIND_USER_PATTERN ]] && { echo "
+      AuthLDAPInitialBindAsUser on
+      AuthLDAPCompareAsUser on
+      AuthLDAPSearchAsUser on
+      AuthLDAPInitialBindPattern ${LDAP_BIND_USER_PATTERN}
+      "; })
+      
+      AuthType Basic
+      AuthBasicProvider ldap
+      AuthLDAPURL "${LDAP_URI}"
+      
+      <RequireAll>
+        ${REQUIRE_COND}
+      </RequireAll>
+      
+      ProxyPreserveHost On
+      ProxyPass "${PROXY_URI}"
+      ProxyPassReverse "${PROXY_URI}"
+      ${CUSTOM_APACHE_CONFIG}
+    </Location>
+</VirtualHost>
