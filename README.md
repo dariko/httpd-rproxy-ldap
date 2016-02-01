@@ -30,15 +30,17 @@ docker run -p 443:443 -e LDAP_URI="ldap://ldap.example.com/dc=example,dc=com?uid
 
 ### PEM Certificates/keys
 The variables requiring PEM certificates/keys must contain the certificate text including the newlines.
+
 If invoking docker via command line:
+
 ```bash
 -e LDAPS_CACERT_PEM="-----BEGIN CERTIFICATE-----\n...\n..."
-```
-```bash
 -e LDAPS_CACERT_PEM="$(cat $TLS_CERTIFICATE_FILE)"
 ```
+
 If using [docker-compose](https://docs.docker.com/compose/), in the `docker-compose.yml` file:
-```
+
+```yaml
 environment:
   LDAPS_CACERT_PEM: |
     -----BEGIN CERTIFICATE-----
