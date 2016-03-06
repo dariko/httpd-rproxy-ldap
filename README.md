@@ -28,6 +28,7 @@ docker run -p 443:443 -e LDAP_URI="ldap://ldap.example.com/dc=example,dc=com?uid
 |`PROXY_URI`|yes||Specifies the parameter for apache's [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass "Apache docs") and [ProxyPassReverse](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypassreverse "Apache Docs") directives.|
 |`REQUIRE_COND`|no|`Require valid-user`|Apache Require directives, will be enclosed in a <RequireAll>.|
 |`LOGLEVEL`|no|`warn`|Specifies the parameter for apache's [LogLevel](https://httpd.apache.org/docs/2.4/mod/core.html#loglevel).|
+|`DISPLAY_CONFIG`|no||If set display the templated configuration before starting apache|
 
 ### PEM Certificates/keys
 The variables requiring PEM certificates/keys must contain the certificate text including the newlines.
