@@ -27,5 +27,9 @@ eval "cat >> /usr/local/apache2/conf/proxy_ldap.conf << EOF
 $(cat /proxy_ldap.conf.template)
 EOF"
 
+[[ -v DISPLAY_CONFIG ]] && {
+  cat /usr/local/apache2/conf/proxy_ldap.conf
+}
+
 # base image CMD
 httpd-foreground
