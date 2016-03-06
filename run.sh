@@ -9,6 +9,7 @@
 : ${BASIC_AUTH_STRING:="LDAP authentication"}
 : ${REQUIRE_COND:="Require valid-user"}
 : ${LISTEN_PORT:=443}
+: ${LOGLEVEL:=warn}
 
 echo -e "$HTTPS_CERT_PEM" > /usr/local/apache2/conf/proxy_ldap.cert.pem
 echo -e "$HTTPS_KEY_PEM" > /usr/local/apache2/conf/proxy_ldap.key.pem

@@ -10,7 +10,7 @@ LoadModule proxy_http_module  modules/mod_proxy_http.so
 
 LDAPTrustedGlobalCert CA_BASE64 "/ldap_cacert.pem"
 
-#LogLevel debug
+LogLevel ${LOGLEVEL}
 <VirtualHost *:${LISTEN_PORT}>
     ServerName ${SERVERNAME}
     SSLEngine on
