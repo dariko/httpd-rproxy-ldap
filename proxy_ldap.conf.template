@@ -15,6 +15,15 @@ LoadModule proxy_http_module  modules/mod_proxy_http.so
 $([[ -v LDAPS_CACERT_PEM ]] && { echo "
   LDAPTrustedGlobalCert CA_BASE64 "/ldap_cacert.pem"
 "; })
+$( [[ -v SOCACHE_TIMEOUT ]] && {
+  echo "
+    LoadModule authn_socache_module modules/mod_authn_socache.so
+    LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+    AuthnCacheSOCache shmcb
+    AuthnCacheEnable
+  ";
+})
+
 
 LogLevel ${LOGLEVEL}
 <VirtualHost *:${LISTEN_PORT}>
@@ -43,7 +52,18 @@ LogLevel ${LOGLEVEL}
       "; })
       
       AuthType Basic
-      AuthBasicProvider ldap
+      $( if [[ -v SOCACHE_TIMEOUT ]]; then
+        echo "
+          AuthBasicProvider socache ldap
+          AuthnCacheProvideFor ldap
+          AuthnCacheTimeout $SOCACHE_TIMEOUT
+        "
+      else
+        echo "
+          AuthBasicProvider ldap
+        "
+      fi;)
+      
       AuthLDAPURL "${LDAP_URI}"
       
       <RequireAll>
