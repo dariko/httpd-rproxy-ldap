@@ -8,6 +8,7 @@
 : ${REQUIRE_COND:="Require valid-user"}
 : ${LISTEN_PORT:=80}
 : ${LOGLEVEL:=warn}
+: ${ENABLE_WEBSOCKET:=yes}
 
 if [[ -v HTTPS_CERT_PEM ]]; then
   if [[ -v HTTPS_KEY_PEM ]]; then

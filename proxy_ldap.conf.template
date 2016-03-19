@@ -12,6 +12,10 @@ LoadModule ldap_module        modules/mod_ldap.so
 LoadModule proxy_module       modules/mod_proxy.so
 LoadModule proxy_http_module  modules/mod_proxy_http.so
 
+$([[ -v ENABLE_WEBSOCKET ]] && [[ "$ENABLE_WEBSOCKET" == "yes" ]] && { echo "
+  LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so
+"; })
+
 $([[ -v LDAPS_CACERT_PEM ]] && { echo "
   LDAPTrustedGlobalCert CA_BASE64 "/ldap_cacert.pem"
 "; })

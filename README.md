@@ -30,6 +30,7 @@ docker run -p 443:443 -e LDAP_URI="ldap://ldap.example.com/dc=example,dc=com?uid
 |`REQUIRE_COND`|no|`Require valid-user`|Apache Require directives, will be enclosed in a <RequireAll>.|
 |`LOGLEVEL`|no|`warn`|Specifies the parameter for apache's [LogLevel](https://httpd.apache.org/docs/2.4/mod/core.html#loglevel).|
 |`DISPLAY_CONFIG`|no||If set display the templated configuration before starting apache|
+|`ENABLE_WEBSOCKET`|no|`yes`|If set to `yes` enables [mod_proxy_wstunnel](https://httpd.apache.org/docs/2.4/mod/mod_proxy_wstunnel.html)|
 
 ### PEM Certificates/keys
 The variables requiring PEM certificates/keys must contain the certificate text including the newlines.
