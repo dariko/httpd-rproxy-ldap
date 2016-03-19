@@ -2,13 +2,13 @@
 
 : ${LDAP_URI:?"Missing variable LDAP_URI"}
 : ${PROXY_URI:?"Missing variable PROXY_URI"}
-: ${SERVERNAME:?"Missing variable SERVERNAME"}
 
 : ${BASIC_AUTH_STRING:="LDAP authentication"}
 : ${REQUIRE_COND:="Require valid-user"}
 : ${LISTEN_PORT:=80}
 : ${LOGLEVEL:=warn}
 : ${ENABLE_WEBSOCKET:=yes}
+: ${SERVERNAME:=localhost.localdomain}
 
 if [[ -v HTTPS_CERT_PEM ]]; then
   if [[ -v HTTPS_KEY_PEM ]]; then

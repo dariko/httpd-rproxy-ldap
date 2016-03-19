@@ -16,7 +16,7 @@ docker run -p 443:443 -e LDAP_URI="ldap://ldap.example.com/dc=example,dc=com?uid
 |:--|:--|:-----------|:------------|
 |`LISTEN_PORT`|yes |`80`| Specifies the port the apache server will listen to.| 
 |`PROXY_URI`|yes |    | Specifies the parameter for apache's [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass "Apache docs") and [ProxyPassReverse](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypassreverse "Apache Docs") directives.| 
-|`SERVERNAME`|yes |  | Specifies the parameter for apache's [ServerName](https://httpd.apache.org/docs/2.4/mod/core.html#servername "Apache docs") directive. Must match HTTPS_PEM_CERT cn| 
+|`SERVERNAME`|no|`localhost.localdomain`| Specifies the parameter for apache's [ServerName](https://httpd.apache.org/docs/2.4/mod/core.html#servername "Apache docs") directive. Must match HTTPS_PEM_CERT cn| 
 |`BASIC_AUTH_STRING`|no|`LDAP Authentication`| Specifies the parameter for apache's [AuthName](https://httpd.apache.org/docs/2.4/mod/mod_authn_core.html#authname "Apache docs") directive.| 
 |`HTTPS_CERT_PEM`|no|| Apache's SSL/TLS PEM certificate text. If given needs ```HTTPS_KEY_PEM``` to be set too. If not given SSL will be disabled.|
 |`HTTPS_KEY_PEM`|no|| Apache's SSL/TLS PEM certificate key text."
