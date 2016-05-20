@@ -18,7 +18,7 @@ if [[ -v HTTPS_CERT_PEM ]]; then
   echo -e "$HTTPS_CERT_PEM" > /usr/local/apache2/conf/proxy_ldap.cert.pem
   echo -e "$HTTPS_KEY_PEM" > /usr/local/apache2/conf/proxy_ldap.key.pem
   [[ -v DHPARAM_PEM ]] && {
-    echo "$DHPARAM_PEM" >> /usr/local/apache2/conf/proxy_ldap.cert.pem;
+    echo "$DHPARAM_PEM" > /usr/local/apache2/conf/proxy_ldap.cert.pem;
   }
 fi
 
@@ -28,7 +28,7 @@ fi
 }
 
 
-eval "cat >> /usr/local/apache2/conf/proxy_ldap.conf << EOF
+eval "cat > /usr/local/apache2/conf/proxy_ldap.conf << EOF
 $(cat /proxy_ldap.conf.template)
 EOF"
 
