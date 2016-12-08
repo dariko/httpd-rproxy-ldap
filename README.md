@@ -23,6 +23,8 @@ docker run -p 443:443 -e LDAP_URI="ldap://ldap.example.com/dc=example,dc=com?uid
 |`DHPARAM_PEM`|yes|| Apache's SSL/TLS PEM DHParameter."
 |`CUSTOM_APACHE_CONFIG`|no||Specifies custom parameters to be appended to the apache virtualhost configuration.|
 |`LDAP_URI`|yes||Specifies the URI of the LDAP server, as documented [here](<https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapurl> "Apache docs").|
+|`LDAP_BIND_DN`|no||Specifies the DN used for search, as documented [here](<https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapbinddn> "Apache docs").|
+|`LDAP_BIND_PASSWORD`|no||Specifies the Password used for bind of the LDAP server, as documented [here](<https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapbindpassword> "Apache docs").|
 |`LDAPS_CACERT_PEM`|no||LDAP CA Certificate.|
 |`LDAP_BIND_USER_PATTERN`|no||Specifies the parameter for apache's [AuthLDAPInitialBindPattern](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapinitialbindpattern). Also sets [AuthLDAPInitialBindAsUser](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapinitialbindasuser), [AuthLDAPSearchAsUser](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapsearchasuser) and [AuthLDAPCompareAsUser](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapcompareasuser) to "on"|
 |`SOCACHE_TIMEOUT`|no||If set enables [authn_socache_module](https://httpd.apache.org/docs/2.4/mod/mod_authn_socache.html) with the specified value as parameter to the [AuthnCacheTimeout](https://httpd.apache.org/docs/2.4/mod/mod_authn_socache.html#authncachetimeout) directive.|
