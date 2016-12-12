@@ -18,8 +18,8 @@ if [[ -v LDAP_BIND_DN ]]; then
 fi
 
 if [[ -v HTTPS_CERT_PEM ]]; then
-  if [[ -v HTTPS_KEY_PEM ]]; then
-    echo "Missing bariable HTTPS_KEY_PEM"
+  if [[ ! -v HTTPS_KEY_PEM ]]; then
+    echo "Missing variable HTTPS_KEY_PEM"
     exit 1
   fi
   echo -e "$HTTPS_CERT_PEM" > /usr/local/apache2/conf/proxy_ldap.cert.pem
