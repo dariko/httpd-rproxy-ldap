@@ -18,7 +18,9 @@ $([[ -v ENABLE_WEBSOCKET ]] && [[ "$ENABLE_WEBSOCKET" == "yes" ]] && { echo "
 
 $([[ -v LDAPS_CACERT_PEM ]] && { echo "
   LDAPTrustedGlobalCert CA_BASE64 "/ldap_cacert.pem"
-"; })
+"; } || { echo "
+  LDAPTrustedGlobalCert CA_BASE64 /etc/ssl/certs/ca-certificates.crt
+ "; } )
 $( [[ -v SOCACHE_TIMEOUT ]] && {
   echo "
     LoadModule authn_socache_module modules/mod_authn_socache.so
@@ -67,7 +69,14 @@ LogLevel ${LOGLEVEL}
           AuthBasicProvider ldap
         "
       fi;)
-      
+
+      $([[ -v LDAP_BIND_DN ]] && { echo "
+          AuthLDAPBindDN ${LDAP_BIND_DN}
+      ";} )
+
+      $([[ -v LDAP_BIND_PASSWORD ]] && { echo "
+          AuthLDAPBindPassword ${LDAP_BIND_PASSWORD}
+      "; })
       AuthLDAPURL "${LDAP_URI}"
       
       <RequireAll>

@@ -10,6 +10,13 @@
 : ${ENABLE_WEBSOCKET:=yes}
 : ${SERVERNAME:=localhost.localdomain}
 
+if [[ -v LDAP_BIND_DN ]]; then
+  if [[ -v LDAP_BIND_USER_PATTERN ]]; then
+    echo "LDAP_BIND_DN and LDAP_BIND_USER_PATTERN parameters are exclusive."
+    exit 2
+  fi
+fi
+
 if [[ -v HTTPS_CERT_PEM ]]; then
   if [[ -v HTTPS_KEY_PEM ]]; then
     echo "Missing bariable HTTPS_KEY_PEM"
