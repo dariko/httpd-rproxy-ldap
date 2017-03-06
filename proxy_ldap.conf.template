@@ -1,3 +1,7 @@
+$([[ -v NO_VERIFY_SERVER_CERT ]] && { echo "
+  LDAPVerifyServerCert Off
+"; })
+
 Listen ${LISTEN_PORT}
 
 $([[ -v HTTPS_CERT_PEM ]] && { echo "
