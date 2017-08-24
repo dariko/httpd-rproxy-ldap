@@ -71,7 +71,7 @@ LogLevel ${LOGLEVEL}
       fi;)
 
       $([[ -v LDAP_BIND_DN ]] && { echo "
-          AuthLDAPBindDN \\"${LDAP_BIND_DN}\\"
+          AuthLDAPBindDN \"${LDAP_BIND_DN}\"
       ";} )
 
       $([[ -v LDAP_BIND_PASSWORD ]] && { echo "
