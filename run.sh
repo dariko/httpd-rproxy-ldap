@@ -39,6 +39,8 @@ eval "cat > /usr/local/apache2/conf/proxy_ldap.conf << EOF
 $(cat /proxy_ldap.conf.template)
 EOF"
 
+sed -i -e 's/^Listen/# Listen/' /usr/local/apache2/conf/httpd.conf
+
 [[ -v DISPLAY_CONFIG ]] && {
   cat /usr/local/apache2/conf/proxy_ldap.conf
 }
