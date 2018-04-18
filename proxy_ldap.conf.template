@@ -71,11 +71,11 @@ LogLevel ${LOGLEVEL}
       fi;)
 
       $([[ -v LDAP_BIND_DN ]] && { echo "
-          AuthLDAPBindDN \\"${LDAP_BIND_DN}\\"
+          AuthLDAPBindDN \"${LDAP_BIND_DN}\"
       ";} )
 
       $([[ -v LDAP_BIND_PASSWORD ]] && { echo "
-          AuthLDAPBindPassword ${LDAP_BIND_PASSWORD}
+          AuthLDAPBindPassword \"${LDAP_BIND_PASSWORD}\"
       "; })
       AuthLDAPURL "${LDAP_URI}"
       
