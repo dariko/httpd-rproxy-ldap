@@ -83,7 +83,7 @@ LogLevel ${LOGLEVEL}
         ${REQUIRE_COND}
       </RequireAll>
 
-      HostnameLookups On
+#      HostnameLookups Off
 
       ProxyPreserveHost On
       ProxyPass "${PROXY_URI}"
