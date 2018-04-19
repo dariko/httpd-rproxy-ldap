@@ -20,6 +20,7 @@ docker run -p 443:443 -e LDAP_URI="ldap://ldap.example.com/dc=example,dc=com?uid
 |`BASIC_AUTH_STRING`|no|`LDAP Authentication`| Specifies the parameter for apache's [AuthName](https://httpd.apache.org/docs/2.4/mod/mod_authn_core.html#authname "Apache docs") directive.| 
 |`HTTPS_CERT_PEM`|no|| Apache's SSL/TLS PEM certificate text. If given needs ```HTTPS_KEY_PEM``` to be set too. If not given SSL will be disabled.|
 |`HTTPS_KEY_PEM`|no|| Apache's SSL/TLS PEM certificate key text."
+|`NO_VERIFY_SERVER_CERT`|no|| If set skips server certificate verification.
 |`DHPARAM_PEM`|yes|| Apache's SSL/TLS PEM DHParameter."
 |`CUSTOM_APACHE_CONFIG`|no||Specifies custom parameters to be appended to the apache virtualhost configuration.|
 |`LDAP_URI`|yes||Specifies the URI of the LDAP server, as documented [here](<https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapurl> "Apache docs").|
