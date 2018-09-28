@@ -16,6 +16,10 @@ $([[ -v ENABLE_WEBSOCKET ]] && [[ "$ENABLE_WEBSOCKET" == "yes" ]] && { echo "
   LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so
 "; })
 
+$([[ -v NO_VERIFY_SERVER_CERT ]] && { echo "
+  LDAPVerifyServerCert Off
+"; })
+
 $([[ -v LDAPS_CACERT_PEM ]] && { echo "
   LDAPTrustedGlobalCert CA_BASE64 "/ldap_cacert.pem"
 "; } || { echo "

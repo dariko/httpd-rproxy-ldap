@@ -1,0 +1,87 @@
+---
+language: python
+python: "2.7"
+
+services:
+-   docker
+
+install:
+-   sudo service docker restart
+-   docker build -t httpd-rproxy-ldap .
+-   ./tests/config_start_openldap.sh
+
+script:
+# SIMPLE CONFIGURATION
+-   docker rm -f proxy || true
+-   |
+    docker run -d \
+        --name proxy \
+        --net host \
+        --env LDAP_BIND_DN=cn=config \
+        --env LDAP_BIND_PASSWORD=password \
+        --env LDAP_URI="ldap://localhost/dc=example,dc=com?cn?sub?(objectClass=*)" \
+        --env PROXY_URI="http://shippable.com" \
+        httpd-rproxy-ldap
+-   sleep 1
+-   curl --fail --user user1:password localhost
+-   curl --fail --user user1:passworda localhost; [ $? -eq 22 ]
+
+-   docker rm -f proxy || true
+# LDAP_BIND_USER_PATTERN + LDAP_BIND_DN
+-   |
+    docker run \
+        --name proxy \
+        --net host \
+        --env LDAP_BIND_DN=cn=config \
+        --env LDAP_BIND_PASSWORD=password \
+        --env LDAP_URI="ldap://localhost/dc=example,dc=com?cn?sub?(objectClass=*)" \
+        --env LDAP_BIND_USER_PATTERN="(.*) cn=\$1,dc=example,dc=com" \
+        --env PROXY_URI="http://shippable.com" \
+        httpd-rproxy-ldap; [ $? -ne 0 ]
+
+-   docker rm -f proxy || true
+# LDAP_BIND_USER_PATTERN
+-   |
+    docker run -d \
+        --name proxy \
+        --net host \
+        --env LDAP_URI="ldap://localhost/dc=example,dc=com?cn?sub?(objectClass=*)" \
+        --env LDAP_BIND_USER_PATTERN="(.*) cn=\$1,dc=example,dc=com" \
+        --env PROXY_URI="http://shippable.com" \
+        httpd-rproxy-ldap
+-   sleep 1
+-   curl --fail --user user1:password localhost
+
+# REQUIRE_COND
+-   docker rm -f proxy || true
+-   |
+    docker run -d \
+        --name proxy \
+        --net host \
+        --env LDAP_URI="ldap://localhost/dc=example,dc=com?cn?sub?(objectClass=*)" \
+        --env LDAP_BIND_USER_PATTERN="(.*) cn=\$1,dc=example,dc=com" \
+        --env REQUIRE_COND="Require ldap-user user1" \
+        --env PROXY_URI="http://shippable.com" \
+        httpd-rproxy-ldap
+-   sleep 1
+-   curl --fail --user user2:password localhost; [ $? -ne 0 ]
+-   curl --fail --user user1:password localhost
+
+# SOCACHE_TIMEOUT
+-   docker rm -f proxy || true
+-   |
+    docker run -d \
+        --name proxy \
+        --net host \
+        --env LOGLEVEL=debug \
+        --env LDAP_URI="ldap://localhost/dc=example,dc=com?cn?sub?(objectClass=*)" \
+        --env LDAP_BIND_USER_PATTERN="(.*) cn=\$1,dc=example,dc=com" \
+        --env PROXY_URI="http://shippable.com" \
+        --env SOCACHE_TIMEOUT=60 \
+        httpd-rproxy-ldap
+-   sleep 1
+-   curl --fail --user user1:password localhost
+-   docker rm -f openldap
+-   curl --fail --user user1:password localhost
+-   curl --fail --user user2:password localhost; [ $? -ne 0 ]
+

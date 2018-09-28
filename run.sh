@@ -46,7 +46,6 @@ pushd /usr/local/apache2/conf/
 [ "${ENABLE_XFF_LOG}" == "yes" ] && ln -sf log_format_xff.conf  log_format.conf || ln -sf log_format_normal.conf  log_format.conf
 popd
 
-
 [[ -v DISPLAY_CONFIG ]] && {
   cat /usr/local/apache2/conf/proxy_ldap.conf
 }
