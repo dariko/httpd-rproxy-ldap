@@ -9,6 +9,7 @@
 : ${LOGLEVEL:=warn}
 : ${ENABLE_WEBSOCKET:=yes}
 : ${SERVERNAME:=localhost.localdomain}
+: ${ENABLE_XFF_LOG:=yes}
 
 if [[ -v LDAP_BIND_DN ]]; then
   if [[ -v LDAP_BIND_USER_PATTERN ]]; then
@@ -40,6 +41,10 @@ $(cat /proxy_ldap.conf.template)
 EOF"
 
 sed -i -e 's/^Listen/# Listen/' /usr/local/apache2/conf/httpd.conf
+
+pushd /usr/local/apache2/conf/
+[ "${ENABLE_XFF_LOG}" == "yes" ] && ln -sf log_format_xff.conf  log_format.conf || ln -sf log_format_normal.conf  log_format.conf
+popd
 
 [[ -v DISPLAY_CONFIG ]] && {
   cat /usr/local/apache2/conf/proxy_ldap.conf

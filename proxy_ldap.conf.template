@@ -79,14 +79,16 @@ LogLevel ${LOGLEVEL}
       ";} )
 
       $([[ -v LDAP_BIND_PASSWORD ]] && { echo "
-          AuthLDAPBindPassword ${LDAP_BIND_PASSWORD}
+          AuthLDAPBindPassword \"${LDAP_BIND_PASSWORD}\"
       "; })
       AuthLDAPURL "${LDAP_URI}"
       
       <RequireAll>
         ${REQUIRE_COND}
       </RequireAll>
-      
+
+#      HostnameLookups Off
+
       ProxyPreserveHost On
       ProxyPass "${PROXY_URI}"
       ProxyPassReverse "${PROXY_URI}"
