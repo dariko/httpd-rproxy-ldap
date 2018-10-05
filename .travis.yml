@@ -67,7 +67,24 @@ script:
 -   curl --fail --user user2:password localhost; [ $? -ne 0 ]
 -   curl --fail --user user1:password localhost
 
+# Space on LDAP_BIND_PASSWORD
+-   docker rm -f proxy || true
+-   |
+    docker run -d \
+        --name proxy \
+        --net host \
+        --env LDAP_URI="ldap://localhost/dc=example,dc=com?cn?sub?(objectClass=*)" \
+        --env REQUIRE_COND="Require ldap-user user1" \
+        --env LDAP_BIND_DN="cn=service,dc=example,dc=com" \
+        --env LDAP_BIND_PASSWORD="pass word" \
+        --env PROXY_URI="http://shippable.com" \
+        httpd-rproxy-ldap
+-   sleep 1
+-   curl --fail --user user2:password localhost; [ $? -ne 0 ]
+-   curl --fail --user user1:password localhost
+
 # SOCACHE_TIMEOUT
+# this test removes the openldap container
 -   docker rm -f proxy || true
 -   |
     docker run -d \
@@ -84,4 +101,3 @@ script:
 -   docker rm -f openldap
 -   curl --fail --user user1:password localhost
 -   curl --fail --user user2:password localhost; [ $? -ne 0 ]
-
