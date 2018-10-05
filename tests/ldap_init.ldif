@@ -22,3 +22,9 @@ objectClass: organizationalRole
 objectClass: simpleSecurityObject
 cn: user2
 userPassword: password
+
+dn: cn=service,dc=example,dc=com
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: service
+userPassword: pass word
