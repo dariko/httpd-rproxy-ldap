@@ -1,4 +1,4 @@
-FROM httpd:2.4
+FROM docker.io/httpd:2.4.57
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libaprutil1-ldap ca-certificates \
