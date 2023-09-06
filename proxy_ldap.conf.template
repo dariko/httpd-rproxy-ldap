@@ -89,9 +89,13 @@ LogLevel ${LOGLEVEL}
 
 #      HostnameLookups Off
 
-      ProxyPreserveHost On
-      ProxyPass "${PROXY_URI}"
-      ProxyPassReverse "${PROXY_URI}"
+      $([[ -v CUSTOM_APACHE_PROXY_CONFIG ]] && { echo "
+          ${CUSTOM_APACHE_PROXY_CONFIG}
+      ";} || { echo "
+          ProxyPreserveHost On
+          ProxyPass "${PROXY_URI}"
+          ProxyPassReverse "${PROXY_URI}"
+      "; })
       ${CUSTOM_APACHE_CONFIG}
     </Location>
 </VirtualHost>
